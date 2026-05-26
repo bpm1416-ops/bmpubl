@@ -2,15 +2,15 @@
    Variables & Reset
    =========================== */
 :root {
-  --color-bg: #f8f5f0;
-  --color-header: #1e3154;
+  --color-bg: #faf6f0;
+  --color-header: #5c2418;
   --color-accent: #c8832a;
   --color-accent-dark: #a66820;
-  --color-text: #2d2d2d;
-  --color-text-light: #6b6560;
+  --color-text: #2d1f18;
+  --color-text-light: #7a6558;
   --color-card: #ffffff;
-  --color-border: #e5ddd5;
-  --color-footer: #16253f;
+  --color-border: #e8ddd3;
+  --color-footer: #3a1810;
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --radius: 10px;
@@ -251,7 +251,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
    Hero
    =========================== */
 .hero {
-  background: linear-gradient(135deg, var(--color-header) 0%, #2a4a7f 60%, #1a3560 100%);
+  background: linear-gradient(135deg, var(--color-header) 0%, #7a3020 60%, #4a1c0e 100%);
   color: #fff;
   padding: 4rem 0 5rem;
   position: relative;
@@ -453,7 +453,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
    Book Detail Page
    =========================== */
 .book-hero {
-  background: linear-gradient(135deg, var(--color-header) 0%, #2a4a7f 100%);
+  background: linear-gradient(135deg, var(--color-header) 0%, #7a3020 100%);
   padding: 3.5rem 0 4rem;
   color: #fff;
 }
