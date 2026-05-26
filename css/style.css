@@ -311,8 +311,28 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   font-weight: 500;
 }
 
+.hero-video {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+
+.hero-video video {
+  width: 100%;
+  display: block;
+}
+
 @media (min-width: 900px) {
   .hero { padding: 6rem 0 7rem; }
+  .hero-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+  }
+  .hero-video { max-width: 380px; }
 }
 
 /* ===========================
