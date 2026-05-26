@@ -413,9 +413,8 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
 .book-card-img {
   width: 100%;
   aspect-ratio: 3/4;
-  object-fit: cover;
-  object-position: center top;
-  background: var(--color-border);
+  object-fit: contain;
+  background: var(--color-bg);
 }
 
 .book-card-body {
