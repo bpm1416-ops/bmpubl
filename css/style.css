@@ -364,6 +364,56 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
 }
 
 /* ===========================
+   USP Section (Home)
+   =========================== */
+.usp-section {
+  background: #fff;
+  padding: 4.5rem 0;
+  border-top: 1px solid var(--color-border);
+}
+.usp-section .section-title { margin-bottom: 0.5rem; }
+.usp-section .section-subtitle { margin-bottom: 2.5rem; }
+.usp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+.usp-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+.usp-icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+.usp-item h3 {
+  font-family: var(--font-body);
+  font-size: 0.975rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--color-text);
+}
+.usp-item p {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  line-height: 1.55;
+  margin: 0;
+}
+@media (min-width: 600px) {
+  .usp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 960px) {
+  .usp-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ===========================
    Books Section (Home)
    =========================== */
 .books-section {
