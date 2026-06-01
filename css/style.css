@@ -229,13 +229,22 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   .site-nav .dropdown {
     display: none;
     position: absolute;
-    top: calc(100% + 0.5rem);
+    top: 100%;
     left: 0;
     background: var(--color-header);
     min-width: 240px;
     border-radius: var(--radius);
     box-shadow: var(--shadow-hover);
     padding: 0.5rem 0;
+    margin-top: 0.5rem;
+  }
+  .site-nav .has-dropdown::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    right: 0;
+    height: 0.5rem;
   }
   .site-nav .has-dropdown:hover .dropdown { display: block; }
   .site-nav .dropdown a {
