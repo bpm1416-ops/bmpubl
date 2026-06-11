@@ -959,6 +959,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
 }
 .carousel-track {
   flex: 1;
+  max-width: 500px;
 }
 .carousel-prev { order: 1; margin-right: 0.5rem; }
 .carousel-track { order: 2; }
