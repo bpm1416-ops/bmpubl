@@ -879,3 +879,95 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
 .mb-1 { margin-bottom: 0.5rem; }
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
+
+/* ===========================
+   Beispielseiten Karussell
+   =========================== */
+.carousel-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.carousel-tab {
+  padding: 0.4rem 1.1rem;
+  border: 2px solid var(--color-accent);
+  background: transparent;
+  color: var(--color-accent);
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.carousel-tab.active,
+.carousel-tab:hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+.carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+.carousel-track {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.carousel-track img {
+  display: none;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+.carousel-track img.active {
+  display: block;
+}
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.carousel-prev,
+.carousel-next {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.carousel-prev:hover,
+.carousel-next:hover {
+  background: var(--color-accent-dark);
+}
+.carousel {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.carousel-track {
+  flex: 1;
+}
+.carousel-prev { order: 1; margin-right: 0.5rem; }
+.carousel-track { order: 2; }
+.carousel-next { order: 3; margin-left: 0.5rem; }
+.carousel-counter {
+  order: 4;
+  width: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-top: 0.5rem;
+}
