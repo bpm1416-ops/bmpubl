@@ -22,6 +22,7 @@ ARTICLE_URL = f"https://app.trysoro.com/api/embed/{SORO_TOKEN}/article/{{id}}"
 
 ROOT = Path(__file__).resolve().parent.parent
 BLOG_DIR = ROOT / "blog"
+IMAGES_DIR = ROOT / "images" / "blog"
 SITE = "https://bmpubl.com"
 
 HEAD_TEMPLATE = """<!DOCTYPE html>
@@ -155,6 +156,16 @@ def load_articles():
     return json.loads(match.group(1))
 
 
+def localize_image(article):
+    """Download the article's hero image so the site doesn't depend on Soro's storage."""
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    local_path = IMAGES_DIR / f"{article['slug']}.webp"
+    if not local_path.exists():
+        with urllib.request.urlopen(article["image"]) as resp:
+            local_path.write_bytes(resp.read())
+    article["image"] = f"{SITE}/images/blog/{article['slug']}.webp"
+
+
 def truncate(text, length=160):
     text = re.sub(r"\s+", " ", text).strip()
     if len(text) <= length:
@@ -274,6 +285,7 @@ def main():
     articles.sort(key=lambda a: a["isoDate"], reverse=True)
 
     for article in articles:
+        localize_image(article)
         content_json = fetch(ARTICLE_URL.format(id=article["id"]))
         content_html = json.loads(content_json)["content"]
         page = render_article_page(article, content_html)
