@@ -1074,6 +1074,15 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   line-height: 1.7;
 }
 
+.blog-article-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.blog-article-body a:hover {
+  text-decoration: none;
+}
+
 .blog-article-back {
   display: inline-block;
   margin-bottom: 2rem;
