@@ -1083,6 +1083,30 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   text-decoration: none;
 }
 
+.blog-article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.blog-article-body th,
+.blog-article-body td {
+  border: 1px solid var(--color-border, #ddd);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-article-body th {
+  background: var(--color-bg-alt, #f5f5f5);
+  font-weight: 600;
+}
+
+.blog-article-body tr:nth-child(even) td {
+  background: rgba(0,0,0,0.02);
+}
+
 .blog-article-back {
   display: inline-block;
   margin-bottom: 2rem;
