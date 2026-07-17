@@ -1083,6 +1083,19 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   text-decoration: none;
 }
 
+.blog-article-body blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--color-bg);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  line-height: 1.7;
+}
+
+.blog-article-body blockquote p {
+  margin-bottom: 0;
+}
+
 .blog-article-body table {
   width: 100%;
   border-collapse: collapse;
@@ -1111,5 +1124,4 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   display: inline-block;
   margin-bottom: 2rem;
   font-size: 0.9rem;
-}
 }
