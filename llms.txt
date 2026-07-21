@@ -2,38 +2,38 @@
 
 > Die Liederbücher für Alt und Jung sind eine bei Schott Music erschienene Reihe von Liederbüchern mit je 100+ bekannten und beliebten Liedern, leicht arrangiert für Gesang mit Gitarre, Ukulele und teils Klavier. Herausgeber ist Bernhard Müller, Autor und Arrangeur ist Sebastian Müller. Die Bücher richten sich an Familien, Schulen, Kitas, Seniorengruppen und alle, die gemeinsam singen möchten.
 
-Alle Bücher sind über den Schott Music Verlag erhältlich. Diese Website (bmpubl.com) stellt jedes Buch mit Hörproben, Beispielseiten und Inhaltsverzeichnis vor.
+Alle Bücher sind über den Schott Music Verlag erhältlich. Diese Website (liederbuecher.com) stellt jedes Buch mit Hörproben, Beispielseiten und Inhaltsverzeichnis vor.
 
 ## Bücher
 
-- [Das Fetenbuch für Alt und Jung](https://bmpubl.com/fetenbuch.html): 100 Hits leicht arrangiert für Gitarre oder Ukulele, als Standard- oder XXL-Format.
-- [Das Rock & Pop Fetenbuch](https://bmpubl.com/rock-pop.html): 100 Meilensteine der Popgeschichte für Gitarre oder Ukulele.
-- [Das Rock & Pop Fetenbuch 2](https://bmpubl.com/rock-pop-2.html): 100 weitere Popsongs für Gitarre oder Ukulele, von Elvis und den Beatles bis Ed Sheeran und Taylor Swift.
-- [Das Schlagerbuch](https://bmpubl.com/schlagerbuch.html): 100 beliebte Songs aus 60 Jahren Schlagergeschichte, leicht arrangiert für Gitarre oder Ukulele.
-- [Das Folk- und Volksliederbuch](https://bmpubl.com/folk.html): 100 Folksongs und Volkslieder für Gitarre oder Ukulele.
-- [Das Kinderliederbuch](https://bmpubl.com/kinderliederbuch.html): 113 alte und neue Kinderlieder für Gitarre, Ukulele und Klavier, für Kita und zuhause.
-- [Das Weihnachtsliederbuch](https://bmpubl.com/weihnachten.html): 100 Weihnachtslieder für Gitarre, Ukulele, Klavier und mehr, in mehreren Ausgaben.
+- [Das Fetenbuch für Alt und Jung](https://liederbuecher.com/fetenbuch.html): 100 Hits leicht arrangiert für Gitarre oder Ukulele, als Standard- oder XXL-Format.
+- [Das Rock & Pop Fetenbuch](https://liederbuecher.com/rock-pop.html): 100 Meilensteine der Popgeschichte für Gitarre oder Ukulele.
+- [Das Rock & Pop Fetenbuch 2](https://liederbuecher.com/rock-pop-2.html): 100 weitere Popsongs für Gitarre oder Ukulele, von Elvis und den Beatles bis Ed Sheeran und Taylor Swift.
+- [Das Schlagerbuch](https://liederbuecher.com/schlagerbuch.html): 100 beliebte Songs aus 60 Jahren Schlagergeschichte, leicht arrangiert für Gitarre oder Ukulele.
+- [Das Folk- und Volksliederbuch](https://liederbuecher.com/folk.html): 100 Folksongs und Volkslieder für Gitarre oder Ukulele.
+- [Das Kinderliederbuch](https://liederbuecher.com/kinderliederbuch.html): 113 alte und neue Kinderlieder für Gitarre, Ukulele und Klavier, für Kita und zuhause.
+- [Das Weihnachtsliederbuch](https://liederbuecher.com/weihnachten.html): 100 Weihnachtslieder für Gitarre, Ukulele, Klavier und mehr, in mehreren Ausgaben.
 
 ## Über die Reihe
 
-- [Autor](https://bmpubl.com/autor.html): Sebastian Müller – Komponist, Pianist, Tonmeister und Arrangeur, Autor der Reihe.
-- [Kontakt](https://bmpubl.com/kontakt.html): Bernhard Müller, Herausgeber der Liederbücher für Alt und Jung.
+- [Autor](https://liederbuecher.com/autor.html): Sebastian Müller – Komponist, Pianist, Tonmeister und Arrangeur, Autor der Reihe.
+- [Kontakt](https://liederbuecher.com/kontakt.html): Bernhard Müller, Herausgeber der Liederbücher für Alt und Jung.
 
 ## Blog
 
-- [Schlager zum Mitsingen: 25 Hits für Feste und Seniorengruppen](https://bmpubl.com/blog/schlager-zum-mitsingen-fuer-feste-und-seniorengruppen.html)
-- [Die besten Liederbücher zum Mitsingen](https://bmpubl.com/blog/beste-liederbuecher-zum-mitsingen.html)
-- [Liederbuch für Gitarre mit einfachen Akkorden](https://bmpubl.com/blog/liederbuch-gitarre-einfache-akkorde.html)
-- [Fetenbuch für gesellige Abende wählen](https://bmpubl.com/blog/fetenbuch-fuer-gesellige-abende-waehlen.html)
-- [Rockklassiker zum Mitsingen auf der Gitarre](https://bmpubl.com/blog/rockklassiker-zum-mitsingen-auf-gitarre.html)
-- [Lagerfeuer-Liederbuch richtig wählen](https://bmpubl.com/blog/lagerfeuer-liederbuch-deutsch-richtig-waehlen.html)
-- [Liederbuch fürs Lagerfeuer mit Gitarre](https://bmpubl.com/blog/liederbuch-fuers-lagerfeuer-mit-gitarre.html)
-- [Welches Liederbuch für Anfänger auf der Gitarre?](https://bmpubl.com/blog/welches-liederbuch-fuer-anfaenger-gitarre.html)
-- [Kinderliederbuch mit Anleitungen zum Mitmachen](https://bmpubl.com/blog/kinderliederbuch-mit-anleitungen-zum-mitmachen.html)
-- [Lieder für Senioren zum Mitsingen](https://bmpubl.com/blog/lieder-fuer-senioren-mitsingen.html)
-- [Weihnachtslieder für das Gruppensingen zuhause](https://bmpubl.com/blog/weihnachtslieder-fuer-gruppensingen-zuhause.html)
+- [Schlager zum Mitsingen: 25 Hits für Feste und Seniorengruppen](https://liederbuecher.com/blog/schlager-zum-mitsingen-fuer-feste-und-seniorengruppen.html)
+- [Die besten Liederbücher zum Mitsingen](https://liederbuecher.com/blog/beste-liederbuecher-zum-mitsingen.html)
+- [Liederbuch für Gitarre mit einfachen Akkorden](https://liederbuecher.com/blog/liederbuch-gitarre-einfache-akkorde.html)
+- [Fetenbuch für gesellige Abende wählen](https://liederbuecher.com/blog/fetenbuch-fuer-gesellige-abende-waehlen.html)
+- [Rockklassiker zum Mitsingen auf der Gitarre](https://liederbuecher.com/blog/rockklassiker-zum-mitsingen-auf-gitarre.html)
+- [Lagerfeuer-Liederbuch richtig wählen](https://liederbuecher.com/blog/lagerfeuer-liederbuch-deutsch-richtig-waehlen.html)
+- [Liederbuch fürs Lagerfeuer mit Gitarre](https://liederbuecher.com/blog/liederbuch-fuers-lagerfeuer-mit-gitarre.html)
+- [Welches Liederbuch für Anfänger auf der Gitarre?](https://liederbuecher.com/blog/welches-liederbuch-fuer-anfaenger-gitarre.html)
+- [Kinderliederbuch mit Anleitungen zum Mitmachen](https://liederbuecher.com/blog/kinderliederbuch-mit-anleitungen-zum-mitmachen.html)
+- [Lieder für Senioren zum Mitsingen](https://liederbuecher.com/blog/lieder-fuer-senioren-mitsingen.html)
+- [Weihnachtslieder für das Gruppensingen zuhause](https://liederbuecher.com/blog/weihnachtslieder-fuer-gruppensingen-zuhause.html)
 
 ## Optional
 
-- [Datenschutz](https://bmpubl.com/datenschutz.html)
-- [Impressum](https://bmpubl.com/impressum.html)
+- [Datenschutz](https://liederbuecher.com/datenschutz.html)
+- [Impressum](https://liederbuecher.com/impressum.html)
