@@ -23,7 +23,7 @@ ARTICLE_URL = f"https://app.trysoro.com/api/embed/{SORO_TOKEN}/article/{{id}}"
 ROOT = Path(__file__).resolve().parent.parent
 BLOG_DIR = ROOT / "blog"
 IMAGES_DIR = ROOT / "images" / "blog"
-SITE = "https://bmpubl.com"
+SITE = "https://liederbuecher.com"
 
 HEAD_TEMPLATE = """<!DOCTYPE html>
 <html lang="de">
@@ -127,7 +127,7 @@ FOOTER_TEMPLATE = """
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 Bernhard Müller · bmpubl.com</p>
+        <p>&copy; 2025 Bernhard Müller · liederbuecher.com</p>
         <div class="footer-bottom-links">
           <a href="{root}impressum.html">Impressum</a>
           <a href="{root}datenschutz.html">Datenschutz</a>
