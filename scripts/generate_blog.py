@@ -1,29 +1,56 @@
 #!/usr/bin/env python3
-"""Generate static blog pages from the Soro embed feed.
+"""Generate static blog pages from local drafts.
 
-Soro (app.trysoro.com) only renders blog content client-side, so the
-articles are invisible to a first-pass crawl and never get individual
-title/meta tags. This script pulls the article list + full content from
-Soro's public embed API and writes them out as plain static HTML pages
-under blog/, plus a static index on blog.html and entries in sitemap.xml.
+The external CMS (Soro) is no longer used. Blog articles are authored
+directly as local draft files and turned into static HTML by this script.
 
-Run after publishing new posts in Soro:
-    python3 scripts/generate_blog.py
+Workflow for a new post:
+  1. Drop a hero image into blogentwürfe/ (jpg/jpeg/png/webp). Its filename
+     should either match the draft's filename, or match the article's slug
+     (the slugified title), optionally followed by "-<number>" (e.g. an
+     image generator's default suffix).
+  2. Drop a draft .txt file into blogentwürfe/ with this shape:
+       Line 1:  the article title (plain text)
+       Line 2:  blank
+       Line 3+: the article body as ready-to-use HTML (<p>, <h2>, <ul>, ...),
+                exactly what should end up inside <div class="blog-article-body">.
+  3. Run:
+       python3 scripts/generate_blog.py
+
+The script picks up any draft whose slug isn't already known, converts its
+hero image to WEBP, writes blog/<slug>.html, records the article in
+blog/articles.json (the persistent index that replaces the old Soro feed),
+and regenerates blog.html and the blog entries in sitemap.xml from that
+index. Already-published articles are left untouched; only new drafts are
+processed, but blog.html/sitemap.xml are always fully rebuilt from the index
+so they stay in sync.
+
+On first run (no blog/articles.json yet), the index is bootstrapped by
+reading the metadata already embedded in the existing blog/*.html pages, so
+nothing has to be re-entered by hand.
 """
 import html
 import json
 import re
-import urllib.request
+import shutil
+import subprocess
+from datetime import datetime
 from pathlib import Path
-
-SORO_TOKEN = "943b7d5e-fd3e-4f5e-aac7-19f2485b5e20"
-EMBED_URL = f"https://app.trysoro.com/api/embed/{SORO_TOKEN}"
-ARTICLE_URL = f"https://app.trysoro.com/api/embed/{SORO_TOKEN}/article/{{id}}"
 
 ROOT = Path(__file__).resolve().parent.parent
 BLOG_DIR = ROOT / "blog"
 IMAGES_DIR = ROOT / "images" / "blog"
+DRAFTS_DIR = ROOT / "blogentwürfe"
+MANIFEST_PATH = BLOG_DIR / "articles.json"
 SITE = "https://liederbuecher.com"
+
+WEBP_QUALITY = 82
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".webp")
+
+GERMAN_MONTHS = [
+    "Januar", "Februar", "März", "April", "Mai", "Juni",
+    "Juli", "August", "September", "Oktober", "November", "Dezember",
+]
 
 HEAD_TEMPLATE = """<!DOCTYPE html>
 <html lang="de">
@@ -143,48 +170,126 @@ FOOTER_TEMPLATE = """
 """
 
 
-def fetch(url):
-    with urllib.request.urlopen(url) as resp:
-        return resp.read().decode("utf-8")
+def slugify(title):
+    text = title.lower()
+    for umlaut, replacement in (("ä", "ae"), ("ö", "oe"), ("ü", "ue"), ("ß", "ss")):
+        text = text.replace(umlaut, replacement)
+    text = re.sub(r"[^a-z0-9]+", "-", text)
+    text = text.strip("-")
+    if len(text) > 80:
+        text = text[:80].rsplit("-", 1)[0]
+    return text
 
 
-def load_articles():
-    js = fetch(EMBED_URL)
-    match = re.search(r"var SORO_ARTICLES = (\[.*?\]);", js, re.S)
-    if not match:
-        raise RuntimeError("Could not find SORO_ARTICLES in embed script")
-    return json.loads(match.group(1))
+def format_date_de(dt):
+    return f"{dt.day}. {GERMAN_MONTHS[dt.month - 1]} {dt.year}"
 
 
-def localize_image(article):
-    """Download the article's hero image so the site doesn't depend on Soro's storage."""
-    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-    local_path = IMAGES_DIR / f"{article['slug']}.webp"
-    if not local_path.exists():
-        with urllib.request.urlopen(article["image"]) as resp:
-            local_path.write_bytes(resp.read())
-    article["image"] = f"{SITE}/images/blog/{article['slug']}.webp"
-
-
-def truncate(text, length=160):
+def truncate(text, length=155):
     text = re.sub(r"\s+", " ", text).strip()
     if len(text) <= length:
         return text
     return text[: length - 1].rsplit(" ", 1)[0] + "…"
 
 
-def render_article_page(article, content_html):
+def extract_excerpt(body_html):
+    match = re.search(r"<p>(.*?)</p>", body_html, re.S)
+    text = match.group(1) if match else body_html
+    text = re.sub(r"<[^>]+>", "", text)
+    return truncate(html.unescape(text))
+
+
+def parse_draft(path):
+    lines = path.read_text(encoding="utf-8").splitlines()
+    title = lines[0].strip()
+    body_lines = lines[1:]
+    while body_lines and not body_lines[0].strip():
+        body_lines.pop(0)
+    return title, "\n".join(body_lines).strip()
+
+
+def find_hero_image(draft_path, slug):
+    candidates = [p for p in DRAFTS_DIR.iterdir() if p.suffix.lower() in IMAGE_EXTENSIONS]
+    for p in candidates:
+        if p.stem == draft_path.stem:
+            return p
+    pattern = re.compile(rf"^{re.escape(slug)}(-\d+)?$", re.I)
+    for p in candidates:
+        if pattern.match(p.stem):
+            return p
+    return None
+
+
+def convert_hero_image(src_path, slug):
+    dest_path = IMAGES_DIR / f"{slug}.webp"
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    if src_path.suffix.lower() == ".webp":
+        shutil.copy(src_path, dest_path)
+    else:
+        subprocess.run(
+            ["cwebp", "-q", str(WEBP_QUALITY), str(src_path), "-o", str(dest_path)],
+            check=True, capture_output=True,
+        )
+    return dest_path
+
+
+def bootstrap_manifest():
+    """Rebuild blog/articles.json from the metadata already baked into existing blog/*.html pages."""
+    articles = []
+    for page_path in sorted(BLOG_DIR.glob("*.html")):
+        text = page_path.read_text(encoding="utf-8")
+        slug = page_path.stem
+        title_m = re.search(r"<h1>(.*?)</h1>", text, re.S)
+        desc_m = re.search(r'<meta name="description" content="(.*?)">', text)
+        iso_m = re.search(r'"datePublished":\s*"([^"]+)"', text)
+        date_disp_m = re.search(r'<p class="blog-article-date">(.*?)</p>', text, re.S)
+        if not (title_m and desc_m and iso_m and date_disp_m):
+            print(f"WARNING: could not bootstrap metadata for {page_path.name}, skipping.")
+            continue
+        articles.append({
+            "slug": slug,
+            "title": html.unescape(title_m.group(1).strip()),
+            "iso_date": iso_m.group(1),
+            "date_display": html.unescape(date_disp_m.group(1).strip()),
+            "excerpt": html.unescape(desc_m.group(1).strip()),
+        })
+    articles.sort(key=lambda a: a["iso_date"], reverse=True)
+    return articles
+
+
+def load_manifest():
+    if MANIFEST_PATH.exists():
+        return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    manifest = bootstrap_manifest()
+    print(f"Bootstrapped blog/articles.json from {len(manifest)} existing pages.")
+    return manifest
+
+
+def save_manifest(manifest):
+    manifest.sort(key=lambda a: a["iso_date"], reverse=True)
+    MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def image_url(slug):
+    return f"{SITE}/images/blog/{slug}.webp"
+
+
+def article_url(slug):
+    return f"{SITE}/blog/{slug}.html"
+
+
+def render_article_page(article, body_html):
     title = f"{article['title']} – Liederbücher für Alt und Jung Blog"
-    description = truncate(article["excerpt"])
-    url = f"{SITE}/blog/{article['slug']}.html"
+    url = article_url(article["slug"])
+    image = image_url(article["slug"])
     head = HEAD_TEMPLATE.format(
         title=html.escape(title),
-        description=html.escape(description),
+        description=html.escape(article["excerpt"]),
         css_path="../",
-        image=article["image"],
+        image=image,
         url=url,
         headline_json=json.dumps(article["title"]),
-        iso_date=article["isoDate"],
+        iso_date=article["iso_date"],
         root="../",
     )
     footer = FOOTER_TEMPLATE.format(root="../")
@@ -194,10 +299,10 @@ def render_article_page(article, content_html):
       <article class="blog-article">
         <a href="../blog.html" class="blog-article-back">← Zurück zum Blog</a>
         <h1>{html.escape(article['title'])}</h1>
-        <p class="blog-article-date">{html.escape(article['date'])}</p>
-        <img class="blog-article-img" src="{article['image']}" alt="{html.escape(article['title'])}">
+        <p class="blog-article-date">{html.escape(article['date_display'])}</p>
+        <img class="blog-article-img" src="{image}" alt="{html.escape(article['title'])}">
         <div class="blog-article-body">
-          {content_html}
+          {body_html}
         </div>
       </article>
     </div>
@@ -216,10 +321,10 @@ def render_index(articles):
         image=f"{SITE}/images/covers/fetenbuch.jpg",
         url=f"{SITE}/blog.html",
         headline_json=json.dumps(title),
-        iso_date=articles[0]["isoDate"] if articles else "",
+        iso_date=articles[0]["iso_date"] if articles else "",
         root="",
     )
-    # plain head doesn't need the BlogPosting JSON-LD; swap to a simple page block instead
+    # plain listing page doesn't need the BlogPosting JSON-LD; strip it out
     head = head.replace(
         head[head.index('<script type="application/ld+json">'):head.index("</script>\n</head>") + len("</script>\n")],
         "",
@@ -230,11 +335,11 @@ def render_index(articles):
     for a in articles:
         cards.append(f"""
         <a class="blog-card" href="blog/{a['slug']}.html">
-          <img class="blog-card-img" src="{a['image']}" alt="{html.escape(a['title'])}" loading="lazy">
+          <img class="blog-card-img" src="{image_url(a['slug'])}" alt="{html.escape(a['title'])}" loading="lazy">
           <div class="blog-card-body">
             <h2>{html.escape(a['title'])}</h2>
             <p>{html.escape(a['excerpt'])}</p>
-            <span class="blog-card-date">{html.escape(a['date'])}</span>
+            <span class="blog-card-date">{html.escape(a['date_display'])}</span>
           </div>
         </a>""")
 
@@ -256,18 +361,17 @@ def render_index(articles):
 
 def update_sitemap(articles):
     sitemap_path = ROOT / "sitemap.xml"
-    text = sitemap_path.read_text()
+    text = sitemap_path.read_text(encoding="utf-8")
     entries = []
     for a in articles:
         entries.append(
             f"  <url>\n"
-            f"    <loc>{SITE}/blog/{a['slug']}.html</loc>\n"
-            f"    <lastmod>{a['isoDate'][:10]}</lastmod>\n"
+            f"    <loc>{article_url(a['slug'])}</loc>\n"
+            f"    <lastmod>{a['iso_date'][:10]}</lastmod>\n"
             f"    <changefreq>yearly</changefreq>\n"
             f"    <priority>0.5</priority>\n"
             f"  </url>\n"
         )
-    # remove any previously generated blog entries (marked with comment), then re-insert
     text = re.sub(
         r"\s*<!-- BEGIN GENERATED BLOG URLS -->.*?<!-- END GENERATED BLOG URLS -->\n",
         "\n",
@@ -276,26 +380,57 @@ def update_sitemap(articles):
     )
     block = "  <!-- BEGIN GENERATED BLOG URLS -->\n" + "".join(entries) + "  <!-- END GENERATED BLOG URLS -->\n"
     text = text.replace("</urlset>", block + "</urlset>")
-    sitemap_path.write_text(text)
+    sitemap_path.write_text(text, encoding="utf-8")
+
+
+def find_new_drafts(manifest):
+    known_slugs = {a["slug"] for a in manifest}
+    drafts = []
+    if not DRAFTS_DIR.exists():
+        return drafts
+    for txt_path in sorted(DRAFTS_DIR.glob("*.txt")):
+        title, body_html = parse_draft(txt_path)
+        if not title or title.startswith("<") or len(title) > 140:
+            print(f"WARNING: '{txt_path.name}' doesn't start with a plain-text title line - skipping "
+                  f"(expected line 1 = title, blank line, then the HTML body).")
+            continue
+        slug = slugify(title)
+        if slug in known_slugs or (BLOG_DIR / f"{slug}.html").exists():
+            continue
+        drafts.append((txt_path, title, body_html, slug))
+    return drafts
 
 
 def main():
     BLOG_DIR.mkdir(exist_ok=True)
-    articles = load_articles()
-    articles.sort(key=lambda a: a["isoDate"], reverse=True)
+    manifest = load_manifest()
 
-    for article in articles:
-        localize_image(article)
-        content_json = fetch(ARTICLE_URL.format(id=article["id"]))
-        content_html = json.loads(content_json)["content"]
-        page = render_article_page(article, content_html)
-        (BLOG_DIR / f"{article['slug']}.html").write_text(page)
-        print(f"wrote blog/{article['slug']}.html")
+    for txt_path, title, body_html, slug in find_new_drafts(manifest):
+        image_src = find_hero_image(txt_path, slug)
+        if image_src is None:
+            print(f"WARNING: no hero image found in blogentwürfe/ for draft '{txt_path.name}' (slug '{slug}') - skipping.")
+            continue
 
-    (ROOT / "blog.html").write_text(render_index(articles))
+        convert_hero_image(image_src, slug)
+        now = datetime.now()
+        article = {
+            "slug": slug,
+            "title": title,
+            "iso_date": now.strftime("%Y-%m-%dT10:00:00.00+00:00"),
+            "date_display": format_date_de(now),
+            "excerpt": extract_excerpt(body_html),
+        }
+        page = render_article_page(article, body_html)
+        (BLOG_DIR / f"{slug}.html").write_text(page, encoding="utf-8")
+        manifest.append(article)
+        print(f"wrote blog/{slug}.html")
+
+    save_manifest(manifest)
+
+    (ROOT / "blog.html").write_text(render_index(manifest), encoding="utf-8")
     print("wrote blog.html (static index)")
 
-    update_sitemap(articles)
+    update_sitemap(manifest)
     print("updated sitemap.xml")
 
 
