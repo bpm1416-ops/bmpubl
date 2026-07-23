@@ -217,6 +217,12 @@ def find_hero_image(draft_path, slug):
     for p in candidates:
         if pattern.match(p.stem):
             return p
+    # image generators sometimes truncate long filenames - accept a long-enough
+    # prefix match of the slug as a fallback (e.g. "...zum-spi" for "...zum-spielen")
+    for p in candidates:
+        stem = p.stem.lower()
+        if len(stem) >= 20 and slug.lower().startswith(stem):
+            return p
     return None
 
 
