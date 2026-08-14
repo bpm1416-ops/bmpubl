@@ -12,7 +12,14 @@ Workflow for a new post:
   2. Drop a draft .txt file into blogentwürfe/ with this shape:
        Line 1:  the article title (plain text)
        Line 2:  blank
-       Line 3+: the article body as ready-to-use HTML (<p>, <h2>, <ul>, ...),
+       Line 3:  optional: "Zusammenfassung: <text>" — a hand-written, distinct
+                summary (~140-160 chars) used for the meta description,
+                og:description, and the blog.html teaser card. If omitted,
+                falls back to auto-extracting/truncating the body's first
+                paragraph (works, but then duplicates the article's opening
+                lines verbatim in the teaser - write a real summary instead).
+       Line 4:  blank (only needed if line 3 was used)
+       Line 5+: the article body as ready-to-use HTML (<p>, <h2>, <ul>, ...),
                 exactly what should end up inside <div class="blog-article-body">.
   3. Run:
        python3 scripts/generate_blog.py
@@ -206,7 +213,12 @@ def parse_draft(path):
     body_lines = lines[1:]
     while body_lines and not body_lines[0].strip():
         body_lines.pop(0)
-    return title, "\n".join(body_lines).strip()
+    excerpt = None
+    if body_lines and body_lines[0].strip().lower().startswith("zusammenfassung:"):
+        excerpt = body_lines.pop(0).split(":", 1)[1].strip()
+        while body_lines and not body_lines[0].strip():
+            body_lines.pop(0)
+    return title, excerpt, "\n".join(body_lines).strip()
 
 
 def find_hero_image(draft_path, slug):
@@ -396,7 +408,7 @@ def find_new_drafts(manifest):
     if not DRAFTS_DIR.exists():
         return drafts
     for txt_path in sorted(DRAFTS_DIR.glob("*.txt")):
-        title, body_html = parse_draft(txt_path)
+        title, excerpt, body_html = parse_draft(txt_path)
         if not title or title.startswith("<") or len(title) > 140:
             print(f"WARNING: '{txt_path.name}' doesn't start with a plain-text title line - skipping "
                   f"(expected line 1 = title, blank line, then the HTML body).")
@@ -404,7 +416,7 @@ def find_new_drafts(manifest):
         slug = slugify(title)
         if slug in known_slugs or (BLOG_DIR / f"{slug}.html").exists():
             continue
-        drafts.append((txt_path, title, body_html, slug))
+        drafts.append((txt_path, title, excerpt, body_html, slug))
     return drafts
 
 
@@ -412,7 +424,7 @@ def main():
     BLOG_DIR.mkdir(exist_ok=True)
     manifest = load_manifest()
 
-    for txt_path, title, body_html, slug in find_new_drafts(manifest):
+    for txt_path, title, excerpt, body_html, slug in find_new_drafts(manifest):
         image_src = find_hero_image(txt_path, slug)
         if image_src is None:
             print(f"WARNING: no hero image found in blogentwürfe/ for draft '{txt_path.name}' (slug '{slug}') - skipping.")
@@ -425,8 +437,11 @@ def main():
             "title": title,
             "iso_date": now.strftime("%Y-%m-%dT10:00:00.00+00:00"),
             "date_display": format_date_de(now),
-            "excerpt": extract_excerpt(body_html),
+            "excerpt": excerpt if excerpt else extract_excerpt(body_html),
         }
+        if not excerpt:
+            print(f"NOTE: '{txt_path.name}' has no 'Zusammenfassung:' line - using an auto-extracted excerpt "
+                  f"(duplicates the article's opening lines). Consider adding one.")
         page = render_article_page(article, body_html)
         (BLOG_DIR / f"{slug}.html").write_text(page, encoding="utf-8")
         manifest.append(article)
