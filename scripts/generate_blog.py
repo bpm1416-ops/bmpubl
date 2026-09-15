@@ -298,7 +298,10 @@ def article_url(slug):
 
 
 def render_article_page(article, body_html):
-    title = f"{article['title']} – Liederbücher für Alt und Jung Blog"
+    # No " – Liederbücher für Alt und Jung Blog" suffix here: og:site_name
+    # already carries the brand, and appending it pushed most article
+    # titles past Bing/Google's ~70-char title-tag limit (flagged 2026-09-15).
+    title = article["title"]
     url = article_url(article["slug"])
     image = image_url(article["slug"])
     head = HEAD_TEMPLATE.format(
