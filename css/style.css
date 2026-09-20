@@ -447,6 +447,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
    Book Card
    =========================== */
 .book-card {
+  position: relative;
   background: var(--color-card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -454,6 +455,21 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
+}
+
+.book-card-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1;
 }
 .book-card:hover {
   transform: translateY(-5px);
@@ -1158,4 +1174,50 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   display: inline-block;
   margin-bottom: 2rem;
   font-size: 0.9rem;
+}
+
+/* ===========================
+   Instrument Landing Pages
+   =========================== */
+.instrument-hero {
+  background: linear-gradient(135deg, var(--color-header) 0%, #7a3020 100%);
+  padding: 3.5rem 0 4rem;
+  color: #fff;
+  text-align: center;
+}
+.instrument-hero-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.instrument-hero h1 { color: #fff; font-size: clamp(1.6rem, 4vw, 2.6rem); }
+.instrument-hero p { color: rgba(255,255,255,0.85); line-height: 1.7; margin-top: 1rem; }
+
+.instrument-intro {
+  padding: 3rem 0 1rem;
+}
+.instrument-intro p {
+  max-width: 720px;
+  color: var(--color-text-light);
+  line-height: 1.7;
+}
+
+.instrument-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+.instrument-nav-links a {
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+.instrument-nav-links a:hover,
+.instrument-nav-links a.active {
+  background: rgba(255,255,255,0.3);
 }
