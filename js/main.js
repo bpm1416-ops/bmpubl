@@ -57,3 +57,31 @@ document.querySelectorAll('.carousel').forEach(carousel => {
     show(current);
   });
 });
+
+// Cover-Karussell im Buch-Hero
+document.querySelectorAll('.cover-carousel').forEach(carousel => {
+  const imgs = carousel.querySelectorAll('.cover-carousel-stage img');
+  const label = carousel.querySelector('.cover-carousel-label');
+  const dotsWrap = carousel.querySelector('.cover-carousel-dots');
+  let current = 0;
+
+  const dots = Array.from(imgs).map((img, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.setAttribute('aria-label', 'Cover ' + img.dataset.label + ' anzeigen');
+    dot.addEventListener('click', () => show(i));
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  function show(index) {
+    current = (index + imgs.length) % imgs.length;
+    imgs.forEach((img, i) => img.classList.toggle('active', i === current));
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    if (label) label.textContent = imgs[current].dataset.label;
+  }
+
+  show(0);
+  carousel.querySelector('.cover-carousel-prev').addEventListener('click', () => show(current - 1));
+  carousel.querySelector('.cover-carousel-next').addEventListener('click', () => show(current + 1));
+});
