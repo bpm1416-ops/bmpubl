@@ -335,6 +335,26 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   .hero-video { max-width: 380px; }
 }
 
+/* Hochformat-Promo-Video (9:16) im Buch-Hero: Mobil unter der Kurzbeschreibung, Desktop rechts daneben */
+.promo-video {
+  width: 240px;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+
+.promo-video video {
+  width: 100%;
+  display: block;
+}
+
+@media (min-width: 680px) {
+  .book-hero-inner.book-hero-inner--video { grid-template-columns: auto 1fr auto; gap: 3rem; }
+  .promo-video { width: 190px; margin: 0; }
+}
+
 /* ===========================
    Features Strip
    =========================== */
