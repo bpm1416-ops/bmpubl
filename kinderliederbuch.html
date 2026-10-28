@@ -167,7 +167,20 @@
   </nav>
   <section class="book-hero">
     <div class="container book-hero-inner">
-      <img src="images/covers/kinderliederbuch.jpg" alt="Das Kinderliederbuch für Alt und Jung" class="book-hero-cover">
+      <div class="cover-carousel" aria-roledescription="carousel" aria-label="Cover der Ausgaben">
+        <div class="cover-carousel-stage">
+          <img src="images/covers/kinderliederbuch-gitarre.jpg" alt="Das Kinderliederbuch für Alt und Jung – Gitarre" data-label="Gitarre" class="active">
+          <img src="images/covers/kinderliederbuch-ukulele.jpg" alt="Das Kinderliederbuch für Alt und Jung – Ukulele" data-label="Ukulele" loading="lazy">
+          <img src="images/covers/kinderliederbuch.jpg" alt="Das Kinderliederbuch für Alt und Jung – XXL" data-label="XXL" loading="lazy">
+          <img src="images/covers/kinderliederbuch-klavier.jpg" alt="Das Kinderliederbuch für Alt und Jung – Klavier" data-label="Klavier" loading="lazy">
+        </div>
+        <div class="cover-carousel-nav">
+          <button type="button" class="cover-carousel-prev" aria-label="Vorheriges Cover">&#8249;</button>
+          <span class="cover-carousel-label" aria-live="polite">Gitarre</span>
+          <button type="button" class="cover-carousel-next" aria-label="Nächstes Cover">&#8250;</button>
+        </div>
+        <div class="cover-carousel-dots"></div>
+      </div>
       <div class="book-hero-content">
         <h1>Das Kinderliederbuch</h1>
         <p class="subtitle">für Alt und Jung</p>

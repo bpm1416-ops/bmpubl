@@ -167,7 +167,19 @@
   </nav>
   <section class="book-hero">
     <div class="container book-hero-inner">
-      <img src="images/covers/rock-pop-2.jpg" alt="Das Rock & Pop Fetenbuch 2 für Alt und Jung" class="book-hero-cover">
+      <div class="cover-carousel" aria-roledescription="carousel" aria-label="Cover der Ausgaben">
+        <div class="cover-carousel-stage">
+          <img src="images/covers/rock-pop-2-gitarre.jpg" alt="Das Rock &amp; Pop Fetenbuch 2 für Alt und Jung – Gitarre" data-label="Gitarre" class="active">
+          <img src="images/covers/rock-pop-2-ukulele.jpg" alt="Das Rock &amp; Pop Fetenbuch 2 für Alt und Jung – Ukulele" data-label="Ukulele" loading="lazy">
+          <img src="images/covers/rock-pop-2.jpg" alt="Das Rock &amp; Pop Fetenbuch 2 für Alt und Jung – XXL" data-label="XXL" loading="lazy">
+        </div>
+        <div class="cover-carousel-nav">
+          <button type="button" class="cover-carousel-prev" aria-label="Vorheriges Cover">&#8249;</button>
+          <span class="cover-carousel-label" aria-live="polite">Gitarre</span>
+          <button type="button" class="cover-carousel-next" aria-label="Nächstes Cover">&#8250;</button>
+        </div>
+        <div class="cover-carousel-dots"></div>
+      </div>
       <div class="book-hero-content">
         <h1>Das Rock &amp; Pop Fetenbuch 2</h1>
         <p class="subtitle">für Alt und Jung</p>
