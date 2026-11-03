@@ -1238,6 +1238,34 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
   color: #fff;
 }
 
+.blog-article-body .blog-cta--cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.blog-article-body .blog-cta--cover img {
+  display: block;
+  width: 150px;
+  height: auto;
+  margin: 0;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.blog-article-body .blog-cta--cover .blog-cta-text p {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 600px) {
+  .blog-article-body .blog-cta--cover {
+    flex-direction: row;
+    text-align: left;
+  }
+  .blog-article-body .blog-cta--cover > a { flex: 0 0 150px; }
+}
+
 .blog-article-body table {
   width: 100%;
   border-collapse: collapse;
