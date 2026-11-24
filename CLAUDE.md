@@ -42,7 +42,7 @@ Entwürfe von außen (z. B. alte byclaire-Entwürfe) vor dem Generieren inhaltli
 ## Wichtige Fakten zu Produkten
 - Klavier-Ausgaben gibt es nur für Kinderliederbuch, Weihnachtsliederbuch und Fetenbuch (ED 23953, 26,50 €, 23 × 30 cm, Spiralbindung). C-Stimme/Blockflöte und Violine gibt es nur beim Weihnachtsliederbuch (Violine: kompakte Ausgabe „45 Weihnachtslied-Klassiker“, 48 S., 23 × 30 cm, 18,50 €).
 - Fetenbuch-Inhalt: aktuelle Ausgabe ohne „Guantanamera“, mit „Aber bitte mit Sahne“ und „Griechischer Wein“. Die Website schreibt „Alle Lieder“ statt „100 Lieder“.
-- Pro Ausgabe gibt es eine Schott-ED-Nummer. Beim Weihnachtsliederbuch: Gitarre 22935, Ukulele 22936, XXL 22802, Klavier 23646.
+- Pro Ausgabe gibt es eine Schott-ED-Nummer. Beim Weihnachtsliederbuch: Gitarre 22935, Ukulele 22936, XXL (Gitarre und Ukulele) 24197, früher 22802 (nur Gitarre), Klavier 23646.
 
 ## SEO-Stand (Nov 2026)
 - Erledigt: Canonicals, Meta-Descriptions, Sitemap-lastmod, Blog aktiv, Titel ohne Brand-Suffix (unter 70 Zeichen), 404-Seite, Redirect-Stubs für fehlerhafte URL-Varianten.

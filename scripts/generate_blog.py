@@ -116,6 +116,15 @@ HEAD_TEMPLATE = """<!DOCTYPE html>
               <li><a href="{root}weihnachten.html">Das Weihnachtsliederbuch</a></li>
             </ul>
           </li>
+          <li class="has-dropdown">
+            <a href="#">Instrumente ▾</a>
+            <ul class="dropdown">
+              <li><a href="{root}gitarre.html">Gitarre</a></li>
+              <li><a href="{root}ukulele.html">Ukulele</a></li>
+              <li><a href="{root}klavier.html">Klavier</a></li>
+              <li><a href="{root}weitere-instrumente.html">Weitere Instrumente</a></li>
+            </ul>
+          </li>
           <li><a href="{root}blog.html">Blog</a></li>
           <li><a href="{root}autor.html">Über den Autor</a></li>
         </ul>
