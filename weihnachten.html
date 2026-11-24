@@ -701,5 +701,12 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Promo-Video startet mit halber Lautstärke
+    (function () {
+      var v = document.querySelector('.promo-video video');
+      if (v) { v.volume = 0.5; }
+    })();
+  </script>
 </body>
 </html>
