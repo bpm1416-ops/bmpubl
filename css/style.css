@@ -353,6 +353,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
 @media (min-width: 680px) {
   .book-hero-inner.book-hero-inner--video { grid-template-columns: auto 1fr auto; gap: 3rem; }
   .promo-video { width: 190px; margin: 0; }
+  .promo-video.promo-video--square { width: 280px; }
 }
 
 /* ===========================
